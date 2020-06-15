@@ -1,3 +1,5 @@
+require 'zip'
+
 class JobInvocationsController < ApplicationController
   include ::Foreman::Controller::AutoCompleteSearch
   include ::ForemanTasks::Concerns::Parameters::Triggering
@@ -119,6 +121,19 @@ class JobInvocationsController < ApplicationController
     redirect_back(:fallback_location => job_invocation_path(@job_invocation))
   end
 
+  def download_outputs
+    @job_invocation = resource_base.find(params[:id])
+    @template_invocations = @job_invocation.template_invocations
+                                           .where(host_id: params[:host_ids].split(','))
+                                           .includes(:host)
+
+    Dir.mktmpdir do |dir|
+      send_data File.read(prepare_files_for_zip(dir)),
+        filename: "output_#{@job_invocation.id}.zip",
+        type: 'application/zip'
+    end
+  end
+
   private
 
   def action_permission
@@ -129,7 +144,7 @@ class JobInvocationsController < ApplicationController
         'create'
       when 'cancel'
         'cancel'
-      when 'chart'
+      when 'chart', 'download_outputs'
         'view'
       else
         super
@@ -164,5 +179,30 @@ class JobInvocationsController < ApplicationController
     end
     @hosts = resource_base_search_and_page
     @total_hosts = resource_base_with_search.size
+  end
+
+  def prepare_files_for_zip(dir)
+    zipfile_path = "#{dir}/output_#{@job_invocation.id}.zip"
+
+    Zip::File.open(zipfile_path, Zip::File::CREATE) do |zipfile|
+      @template_invocations.each do |t|
+        output = t.run_host_job_task.main_action.continuous_output.humanize
+        tmp_file = Tempfile.new
+
+        if params[:format] == 'pdf'
+          tmp_file.binmode
+          tmp_file.write(RemoteExecutionPDF.create(output).render)
+          tmp_file.close
+
+          zipfile.add("#{t.host.name}.pdf", tmp_file)
+        else
+          tmp_file.write(output)
+          tmp_file.close
+          zipfile.add("#{t.host.name}.txt", tmp_file)
+        end
+      end
+    end
+
+    zipfile_path
   end
 end

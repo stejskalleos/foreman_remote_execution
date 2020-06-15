@@ -237,6 +237,7 @@ module RemoteExecutionHelper
       link_authorized = !task.nil? && authorized_for(hash_for_template_invocation_path(:id => template_invocation).merge(:auth_object => host, :permission => :view_hosts, :authorizer => job_hosts_authorizer))
 
       { name: host.name,
+        id: host.id,
         link: link_authorized ? template_invocation_path(:id => template_invocation) : '',
         status: template_invocation_status(task, job_invocation.task),
         actions: template_invocation_actions(task, host, job_invocation, template_invocation) }

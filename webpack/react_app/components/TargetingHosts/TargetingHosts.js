@@ -4,6 +4,8 @@ import { translate as __ } from 'foremanReact/common/I18n';
 import { LoadingState, Alert } from 'patternfly-react';
 import { STATUS } from 'foremanReact/constants';
 import HostItem from './components/HostItem';
+import DownloadButton from './components/DownloadButton';
+import SelectHosts from './components/SelectHosts';
 
 const TargetingHosts = ({ apiStatus, items }) => {
   if (apiStatus === STATUS.ERROR) {
@@ -22,7 +24,10 @@ const TargetingHosts = ({ apiStatus, items }) => {
         <table className="table table-bordered table-striped table-hover">
           <thead>
             <tr>
-              <th>{__('Host')}</th>
+              <th width="40px" className="ca">
+                <SelectHosts />
+              </th>
+              <th className="col-md-8">{__('Host')}</th>
               <th>{__('Status')}</th>
               <th>{__('Actions')}</th>
             </tr>
@@ -31,6 +36,7 @@ const TargetingHosts = ({ apiStatus, items }) => {
             {items.map(host => (
               <HostItem
                 key={host.name}
+                id={host.id}
                 name={host.name}
                 link={host.link}
                 status={host.status}
@@ -44,6 +50,14 @@ const TargetingHosts = ({ apiStatus, items }) => {
               </tr>
             )}
           </tbody>
+          <tfoot>
+            <tr>
+              <th colSpan="3">&nbsp;</th>
+              <th>
+                <DownloadButton />
+              </th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </LoadingState>

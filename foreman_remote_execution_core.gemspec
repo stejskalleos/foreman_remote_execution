@@ -20,4 +20,6 @@ DESC
 
   s.add_runtime_dependency('foreman-tasks-core', '>= 0.3.1')
   s.add_runtime_dependency('net-ssh')
+  s.add_runtime_dependency('prawn', '~> 2.2')
+  s.add_runtime_dependency('rubyzip', '~> 2.3')
 end

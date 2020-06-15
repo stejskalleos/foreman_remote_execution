@@ -79,6 +79,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_dynflow_task do
+      after(:build) do |template, _evaluator|
+        template.run_host_job_task = FactoryBot.build(:dynflow_task)
+      end
+    end
+
     trait :with_failed_task do
       after(:build) do |template, _evaluator|
         template.run_host_job_task = FactoryBot.build(:some_task, :result => 'error')

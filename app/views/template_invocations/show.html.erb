@@ -19,6 +19,13 @@
                      link_to_function(_('Toggle STDERR'), '$("div.line.stderr").toggle()', :class => 'btn btn-default'),
                      link_to_function(_('Toggle STDOUT'), '$("div.line.stdout").toggle()', :class => 'btn btn-default'),
                      link_to_function(_('Toggle DEBUG'), '$("div.line.debug").toggle()', :class => 'btn btn-default')) %>
+    <%= select_action_button(
+          _('Download'), {},
+          link_to(_('Text file'), download_output_template_invocation_path(@template_invocation, format: 'text')),
+          link_to(_('PDF'), download_output_template_invocation_path(@template_invocation, format: 'pdf'))
+          )
+    %>
+
     <%= button_group(template_invocation_task_buttons(@template_invocation_task, @template_invocation.job_invocation)) %>
   </div>
 </div>

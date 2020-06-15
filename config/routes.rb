@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     member do
       get 'rerun'
       post 'cancel'
+      get 'download_outputs'
     end
   end
 
@@ -36,6 +37,10 @@ Rails.application.routes.draw do
   resources :template_invocations, :only => [:show, :index] do
     collection do
       get 'auto_complete_search'
+    end
+
+    member do
+      get 'download_output'
     end
   end
 

@@ -58,4 +58,22 @@ class JobInvocationsControllerTest < ActionController::TestCase
     post :new, params: params, session: set_session_user
     assert_response :success
   end
+
+  context 'download_outputs' do
+    let(:tmp_inv) { FactoryBot.create(:template_invocation, :with_dynflow_task, :with_host) }
+
+    test 'should download zip file text files' do
+      params = { id: tmp_inv.job_invocation.id, host_ids: [tmp_inv.host.id], format: 'txt' }
+      get :download_outputs, params: params, session: set_session_user
+      assert_response :success
+      assert_equal response.headers['Content-Type'], 'application/zip'
+    end
+
+    test 'should download zip file with pdf files' do
+      params = { id: tmp_inv.job_invocation.id, host_ids: [tmp_inv.host.id], format: 'pdf' }
+      get :download_outputs, params: params, session: set_session_user
+      assert_response :success
+      assert_equal response.headers['Content-Type'], 'application/zip'
+    end
+  end
 end

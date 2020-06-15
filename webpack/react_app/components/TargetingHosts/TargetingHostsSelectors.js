@@ -18,3 +18,8 @@ export const selectTotalHosts = state =>
 
 export const selectIntervalExists = state =>
   selectDoesIntervalExist(state, TARGETING_HOSTS);
+
+export const selectRexState = state =>
+  state.foremanRemoteExecutionReducers.targetingHosts;
+export const selectSelectedHosts = state =>
+  selectRexState(state).selectedHosts || [];
