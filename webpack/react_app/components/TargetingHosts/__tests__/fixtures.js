@@ -24,6 +24,7 @@ export const TargetingHostsFixtures = {
         actions: [],
       },
     ],
+    autoRefresh: 'false',
   },
   'renders with error': {
     status: 'ERROR',
@@ -35,9 +36,11 @@ export const TargetingHostsFixtures = {
         actions: [],
       },
     ],
+    autoRefresh: 'false',
   },
   'renders with loading': {
     status: '',
     items: [],
+    autoRefresh: 'true',
   },
 };

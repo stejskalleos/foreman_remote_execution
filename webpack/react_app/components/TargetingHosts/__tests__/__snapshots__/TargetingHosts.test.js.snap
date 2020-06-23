@@ -74,7 +74,15 @@ exports[`TargetingHosts renders with loading 1`] = `
           </th>
         </tr>
       </thead>
-      <tbody />
+      <tbody>
+        <tr>
+          <td
+            colSpan="3"
+          >
+            No hosts found.
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </LoadingState>
