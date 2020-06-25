@@ -15,7 +15,7 @@ export const HostStatusFixtures = {
 
 export const TargetingHostsFixtures = {
   renders: {
-    status: '',
+    apiStatus: '',
     items: [
       {
         name: 'host',
@@ -24,10 +24,9 @@ export const TargetingHostsFixtures = {
         actions: [],
       },
     ],
-    autoRefresh: 'false',
   },
   'renders with error': {
-    status: 'ERROR',
+    apiStatus: 'ERROR',
     items: [
       {
         name: 'host',
@@ -36,11 +35,9 @@ export const TargetingHostsFixtures = {
         actions: [],
       },
     ],
-    autoRefresh: 'false',
   },
   'renders with loading': {
-    status: '',
+    apiStatus: 'PENDING',
     items: [],
-    autoRefresh: 'true',
   },
 };

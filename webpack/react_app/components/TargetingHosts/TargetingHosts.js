@@ -5,8 +5,8 @@ import { LoadingState, Alert } from 'patternfly-react';
 import { STATUS } from 'foremanReact/constants';
 import HostItem from './components/HostItem';
 
-const TargetingHosts = ({ status, items, autoRefresh }) => {
-  if (status === STATUS.ERROR) {
+const TargetingHosts = ({ apiStatus, items }) => {
+  if (apiStatus === STATUS.ERROR) {
     return (
       <Alert type="error">
         {__(
@@ -17,7 +17,7 @@ const TargetingHosts = ({ status, items, autoRefresh }) => {
   }
 
   return (
-    <LoadingState loading={!items.length && autoRefresh === 'true'}>
+    <LoadingState loading={!items.length && apiStatus === STATUS.PENDING}>
       <div>
         <table className="table table-bordered table-striped table-hover">
           <thead>
@@ -51,9 +51,8 @@ const TargetingHosts = ({ status, items, autoRefresh }) => {
 };
 
 TargetingHosts.propTypes = {
-  status: PropTypes.string.isRequired,
+  apiStatus: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
-  autoRefresh: PropTypes.string.isRequired,
 };
 
 export default TargetingHosts;

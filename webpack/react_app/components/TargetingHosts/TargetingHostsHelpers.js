@@ -1,9 +1,10 @@
 import { getURI } from 'foremanReact/common/urlHelpers';
 
-export const getApiUrl = (searchQuery, pagination) =>
-  getURI()
+export const getApiUrl = (searchQuery, pagination) => {
+  const baseUrl = getURI()
     .search('')
-    .addQuery('search', searchQuery)
     .addQuery('page', pagination.page)
-    .addQuery('per_page', pagination.perPage)
-    .addQuery('format', 'json');
+    .addQuery('per_page', pagination.perPage);
+
+  return searchQuery ? baseUrl.addQuery('search', searchQuery) : baseUrl;
+};

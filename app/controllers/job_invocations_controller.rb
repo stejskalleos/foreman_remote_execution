@@ -54,7 +54,14 @@ class JobInvocationsController < ApplicationController
     @job_invocation = resource_base.includes(:template_invocations => :run_host_job_task).find(params[:id])
     @job_organization = Taxonomy.find_by(id: @job_invocation.task.input[:current_organization_id])
     @job_location = Taxonomy.find_by(id: @job_invocation.task.input[:current_location_id])
-    targeting_hosts_resources if params[:format] == 'json'
+
+    respond_to do |format|
+      format.json do
+        targeting_hosts_resources
+      end
+
+      format.html
+    end
   end
 
   def index
