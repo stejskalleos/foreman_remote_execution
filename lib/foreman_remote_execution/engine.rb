@@ -163,9 +163,7 @@ module ForemanRemoteExecution
 
         # Extend Registration module
         extend_allowed_registration_vars :remote_execution_interface
-        extend_page 'registration/_form' do |cx|
-          cx.add_pagelet :global_registration, name: N_('Remote Execution'), partial: 'api/v2/registration/form', priority: 100, id: 'remote_execution_interface'
-        end
+        register_global_js_file 'fills'
       end
     end
 
