@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { FieldLevelHelp } from 'patternfly-react';
 
 import CommonForm from 'foremanReact/components/common/forms/CommonForm';
+
 import { translate as __ } from 'foremanReact/common/I18n';
 
-const RegistrationRemoteExecutionInterface = ({ isLoading }) => {
+const RexInterface = ({ isLoading, onChange }) => {
+
   const tooltipProps = text => ({
     buttonClass: 'field-help',
     placement: 'right',
@@ -29,17 +31,19 @@ const RegistrationRemoteExecutionInterface = ({ isLoading }) => {
         id="remote_execution_interface"
         className="form-control"
         disabled={isLoading}
+        onChange={e => onChange({remote_execution_interface: e.target.value})}
       />
     </CommonForm>
   );
 };
 
-RegistrationRemoteExecutionInterface.propTypes = {
+RexInterface.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-RegistrationRemoteExecutionInterface.defaultProps = {
+RexInterface.defaultProps = {
   isLoading: false,
 };
 
-export default RegistrationRemoteExecutionInterface;
+// export const reducers = { registration: reducer };
+export default RexInterface;
