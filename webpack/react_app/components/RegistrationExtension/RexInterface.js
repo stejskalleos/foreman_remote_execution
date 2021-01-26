@@ -1,29 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FieldLevelHelp } from 'patternfly-react';
 
-import CommonForm from 'foremanReact/components/common/forms/CommonForm';
+import FormField from 'foremanReact/components/common/forms/FormField';
 
 import { translate as __ } from 'foremanReact/common/I18n';
 
 const RexInterface = ({ isLoading, onChange }) => {
-
-  const tooltipProps = text => ({
-    buttonClass: 'field-help',
-    placement: 'right',
-    content: text,
-  });
-
   return (
-    <CommonForm
+    <FormField
       label={__('Remote Execution Interface')}
-      tooltipHelp={
-        <FieldLevelHelp
-          {...tooltipProps(
-            __('Identifier of the Host interface for Remote execution')
-          )}
-        />
-      }
+      labelHelp={__('Identifier of the Host interface for Remote execution')}
     >
       <input
         type="text"
@@ -33,7 +19,7 @@ const RexInterface = ({ isLoading, onChange }) => {
         disabled={isLoading}
         onChange={e => onChange({remote_execution_interface: e.target.value})}
       />
-    </CommonForm>
+    </FormField>
   );
 };
 
@@ -45,5 +31,4 @@ RexInterface.defaultProps = {
   isLoading: false,
 };
 
-// export const reducers = { registration: reducer };
 export default RexInterface;
