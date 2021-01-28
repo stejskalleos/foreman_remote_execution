@@ -1,11 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { translate as __ } from 'foremanReact/common/I18n';
 import FormField from 'foremanReact/components/common/forms/FormField';
 
-import { translate as __ } from 'foremanReact/common/I18n';
+import {selectRexInterface} from './RegistrationSelectors'
 
 const RexInterface = ({ isLoading, onChange }) => {
+  const value = useSelector(selectRexInterface)
+
   return (
     <FormField
       label={__('Remote Execution Interface')}
@@ -17,7 +21,8 @@ const RexInterface = ({ isLoading, onChange }) => {
         id="remote_execution_interface"
         className="form-control"
         disabled={isLoading}
-        onChange={e => onChange({remote_execution_interface: e.target.value})}
+        defaultValue={value}
+        onBlur={e => onChange({ key: 'remoteExecutionInterface', value: e.target.value })}
       />
     </FormField>
   );
@@ -25,10 +30,12 @@ const RexInterface = ({ isLoading, onChange }) => {
 
 RexInterface.propTypes = {
   isLoading: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 RexInterface.defaultProps = {
   isLoading: false,
+  onChange: undefined,
 };
 
 export default RexInterface;
