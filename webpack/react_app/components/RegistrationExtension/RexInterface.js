@@ -1,41 +1,53 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { translate as __ } from 'foremanReact/common/I18n';
-import FormField from 'foremanReact/components/common/forms/FormField';
 
-import {selectRexInterface} from './RegistrationSelectors'
+import {
+  FormGroup,
+  TextInput,
+  Popover,
+} from '@patternfly/react-core';
 
-const RexInterface = ({ isLoading, onChange }) => {
-  const value = useSelector(selectRexInterface)
+import { HelpIcon } from '@patternfly/react-icons';
+
+const RexInterface = ({ isLoading, onChange, data }) => {
+  const value = data?.remoteExecutionInterface || '';
 
   return (
-    <FormField
+    <FormGroup
       label={__('Remote Execution Interface')}
-      labelHelp={__('Identifier of the Host interface for Remote execution')}
+      fieldId='reg_rex_interface'
+      labelIcon={
+        <Popover bodyContent={<div>{__('Identifier of the Host interface for Remote execution')}</div>}>
+          <button
+            className='pf-c-form__group-label-help'
+            onClick={e => e.preventDefault()}
+          >
+            <HelpIcon noVerticalAlign />
+          </button>
+        </Popover>
+      }
     >
-      <input
+      <TextInput
+        value={value}
         type="text"
-        name="remote_execution_interface"
-        id="remote_execution_interface"
-        className="form-control"
-        disabled={isLoading}
-        defaultValue={value}
-        onBlur={e => onChange({ key: 'remoteExecutionInterface', value: e.target.value })}
+        isDisabled={isLoading}
+        id='reg_rex_interface_input'
+        onChange={(v) => onChange({ remoteExecutionInterface: v })}
       />
-    </FormField>
+    </FormGroup>
   );
 };
 
-RexInterface.propTypes = {
-  isLoading: PropTypes.bool,
-  onChange: PropTypes.func,
-};
+// RexInterface.propTypes = {
+//   isLoading: PropTypes.bool,
+//   onChange: PropTypes.func,
+// };
 
-RexInterface.defaultProps = {
-  isLoading: false,
-  onChange: undefined,
-};
+// RexInterface.defaultProps = {
+//   isLoading: false,
+//   onChange: undefined,
+// };
 
 export default RexInterface;
