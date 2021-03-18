@@ -11,8 +11,8 @@ import {
 
 import { HelpIcon } from '@patternfly/react-icons';
 
-const RexInterface = ({ isLoading, onChange, data }) => {
-  const value = data?.remoteExecutionInterface || '';
+const RexInterface = ({ isLoading, onChange, pluginValues }) => {
+  const value = pluginValues?.remoteExecutionInterface || '';
 
   return (
     <FormGroup
